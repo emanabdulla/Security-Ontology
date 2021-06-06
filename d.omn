@@ -1,0 +1,21 @@
+## This file was created by Tawny-OWL
+## It should not be edited by hand
+Prefix: Eve: <http://www.russet.org.uk/tawny/security/Eve#>
+Prefix: no: <urn:absolute:b2ac8f0f-9c92-4bdd-a8a6-8978d11fd986#no#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <urn:absolute:b2ac8f0f-9c92-4bdd-a8a6-8978d11fd986#no>
+
+
+Class: no:C
+
+    
+Class: no:D
+
+    

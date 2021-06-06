@@ -1,0 +1,153 @@
+## This file was created by Tawny-OWL
+## It should not be edited by hand
+Prefix: SecurityVocab: <http://www.russet.org.uk/tawny/security/securityVocab#>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+
+Ontology: <http://www.russet.org.uk/tawny/security/securityVocab>
+
+Import: <http://www.purl.org/ontolink/tawny>
+
+Annotations: 
+    <http://www.purl.org/ontolink/tawny#name> "SecurityVocab"@en,
+    rdfs:comment "The vovabulary for Security domain"@en
+
+AnnotationProperty: <http://www.purl.org/ontolink/tawny#name>
+
+    
+AnnotationProperty: rdfs:comment
+
+    
+AnnotationProperty: rdfs:label
+
+    
+Datatype: rdf:PlainLiteral
+
+    
+ObjectProperty: SecurityVocab:CanDecrypt
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "CanDecrypt"@en
+    
+    
+ObjectProperty: SecurityVocab:CanEncrypt
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "CanEncrypt"@en
+    
+    
+ObjectProperty: SecurityVocab:hasDecrypted
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "hasDecrypted"@en
+    
+    
+ObjectProperty: SecurityVocab:hasEncrypted
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "hasEncrypted"@en
+    
+    
+ObjectProperty: SecurityVocab:hasKnowledgeOf
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "hasKnowledgeOf"@en
+    
+    
+Class: SecurityVocab:CipherText
+
+    Annotations: 
+        rdfs:label "security"@en,
+        <http://www.purl.org/ontolink/tawny#name> "CipherText"@en,
+        rdfs:comment "The message after encryption"@en
+    
+    SubClassOf: 
+        SecurityVocab:hasEncrypted some SecurityVocab:PlainText
+    
+    
+Class: SecurityVocab:Decryption
+
+    Annotations: 
+        rdfs:label "security"@en,
+        <http://www.purl.org/ontolink/tawny#name> "Decryption"@en,
+        rdfs:comment "The proces to change CiphrtText to PlainText"@en
+    
+    
+Class: SecurityVocab:Encryption
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "Encryption"@en,
+        rdfs:label "security"@en,
+        rdfs:comment "The proces to change plainText to CipherText"@en
+    
+    
+Class: SecurityVocab:Key
+
+    Annotations: 
+        rdfs:comment "The tool use to encrypt & decrypt the message"@en,
+        rdfs:label "security"@en,
+        <http://www.purl.org/ontolink/tawny#name> "Key"@en
+    
+    
+Class: SecurityVocab:PlainText
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "PlainText"@en,
+        rdfs:label "security"@en,
+        rdfs:comment "The message before encryption"@en
+    
+    SubClassOf: 
+        SecurityVocab:hasDecrypted some SecurityVocab:CipherText
+    
+    
+Individual: SecurityVocab:Alice
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "Alice"@en
+    
+    Facts:  
+     SecurityVocab:hasKnowledgeOf  SecurityVocab:AlicesKey
+    
+    
+Individual: SecurityVocab:AlicesKey
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "AlicesKey"@en
+    
+    Types: 
+        SecurityVocab:Key
+    
+    
+Individual: SecurityVocab:Bob
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "Bob"@en
+    
+    Facts:  
+     SecurityVocab:hasKnowledgeOf  SecurityVocab:BobKey
+    
+    
+Individual: SecurityVocab:BobKey
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "BobKey"@en
+    
+    Types: 
+        SecurityVocab:Key
+    
+    
+Individual: SecurityVocab:Eve
+
+    Annotations: 
+        <http://www.purl.org/ontolink/tawny#name> "Eve"@en
+    
+    Facts:  
+      not  SecurityVocab:hasKnowledgeOf  SecurityVocab:AlicesKey,
+      not  SecurityVocab:hasKnowledgeOf  SecurityVocab:BobKey
+    
+    
