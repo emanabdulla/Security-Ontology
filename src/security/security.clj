@@ -62,7 +62,7 @@
   :ontology SecurityVocab
 )
 
-
+;;delete
 (defoproperty CanDecrypt
  :ontology SecurityVocab)
 

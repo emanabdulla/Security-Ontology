@@ -3,8 +3,8 @@
   (:require [tawny.owl :refer :all]
             [tawny.english]
             [tawny.reasoner]
-            [security.security :as sec]
-))
+           [security.security :as sec]))
+
 
 (defontology PublicKeyCryptography
    :iri "http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography"
@@ -22,9 +22,8 @@
 
 (defindividual AlicePrivateKey
   :ontology PublicKeyCryptography
-  :comment "is used to decrypt message by Alice only"
-  
- :fact (is hasKnownBy sec/Alice))
+  :comment "is used to decrypt message by Alice only" 
+  :fact (is hasKnownBy sec/Alice))
 
 (defclass BobPublicKey
   :ontology PublicKeyCryptography
