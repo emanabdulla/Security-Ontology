@@ -17,9 +17,9 @@
   :comment "is used by everyone to encrypt message to Alice")
  
 (defclass privateKey)
+(defclass PublicKey)
 
-
-
+(defoproperty hasEncryptionKey)
 (defindividual AlicePrivateKey
   :ontology PublicKeyCryptography
   :comment "is used to decrypt message by Alice only" 
@@ -33,7 +33,7 @@
   :ontology PublicKeyCryptography
   :comment "is used to decrypt message by Bob only"
   :super
-  (owl-only hasKnownBy Bob))
+  (owl-only hasKnownBy sec/Bob))
 
 (defclass CipherText
   :equivalent (owl-some hasEncryptionKey PublicKey))
