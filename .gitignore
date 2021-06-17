@@ -10,3 +10,5 @@ pom.xml.asc
 /.nrepl-port
 /.lein-failures
 .DS_Store
+.DS_Store?
+._*
