@@ -103,7 +103,7 @@
 
 )
 
-fdsafds
+
 
 (refine sec/Alice
   :fact (is hasKnowledgeOf AlicePublicKey)
