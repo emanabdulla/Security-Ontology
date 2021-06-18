@@ -1,4 +1,4 @@
-(ns publickey.publickey
+(ns security.publicK
 (:use [tawny.owl])
   (:require [tawny.owl :refer :all]
             [tawny.english]
@@ -9,6 +9,9 @@
 (defontology PublicKeyCryptography
    :iri "http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography"
    :comment "An Ontology for Public Key Cryptography")
+
+(defclass PublicKey
+   :ontology PublicKeyCryptography)
 
 (defoproperty hasKnownBy
    :ontology PublicKeyCryptography)
@@ -24,8 +27,7 @@
  
 (defclass PrivateKey
    :ontology PublicKeyCryptography)
-(defclass PublicKey
-   :ontology PublicKeyCryptography)
+
 
 (defoproperty hasEncryptionKey
    :ontology PublicKeyCryptography)

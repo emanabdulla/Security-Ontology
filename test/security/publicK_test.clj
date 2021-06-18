@@ -1,4 +1,4 @@
-(ns security.publicK-test
+(ns security.PublicK-test
     (:use [clojure.test])
     (:require
      [security.publicK ]
@@ -9,5 +9,5 @@
 (use-fixtures :each (f/reasoner :hermit))
 
 (deftest reasonable
-  (is (r/consistent? security.publicK/PublickEeyCryptography))
+  (is (r/consistent? security.publicK/PublicKeyCryptography))
   (is (r/coherent? security.publicK/PublicKeyCryptography)))
