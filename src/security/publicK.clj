@@ -10,28 +10,39 @@
    :iri "http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography"
    :comment "An Ontology for Public Key Cryptography")
 
-(defoproperty hasKnownBy)
-(defoproperty hasKnowledgeOf)
+(defoproperty hasKnownBy
+   :ontology PublicKeyCryptography)
 
-(defclass AlicePublicKey
+(defoproperty hasKnowledgeOf
+   :ontology PublicKeyCryptography)
+
+
+(defindividual AlicePublicKey
+  :type PublicKey
   :ontology PublicKeyCryptography
   :comment "is used by everyone to encrypt message to Alice")
  
-(defclass privateKey)
-(defclass PublicKey)
+(defclass PrivateKey
+   :ontology PublicKeyCryptography)
+(defclass PublicKey
+   :ontology PublicKeyCryptography)
 
-(defoproperty hasEncryptionKey)
+(defoproperty hasEncryptionKey
+   :ontology PublicKeyCryptography)
 
 (defindividual AlicePrivateKey
+  :type PrivateKey
   :ontology PublicKeyCryptography
   :comment "is used to decrypt message by Alice only" 
   :fact (is hasKnownBy sec/Alice))
 
-(defclass BobPublicKey
+(defindividual BobPublicKey
+  :type PublicKey
   :ontology PublicKeyCryptography
   :comment "is used by everyone to encrypt message to Bob")
 
 (defindividual BobPrivateKey
+  :type PrivateKey
   :ontology PublicKeyCryptography
   :comment "is used to decrypt message by Bob only"
   :fact(is hasKnownBy sec/Bob))
@@ -42,23 +53,25 @@
 ;; Useful test
 ;; (r/isuperclass? CipherText AliceCipherText)
 
-(defclass AliceCipherText
+(defindividual AliceCipherText
+  :type CipherText
   :comment "Cipher text intended for Alice to read"
-  :super (owl-some hasEncryptionKey AlicePublicKey))
+  :fact (is hasEncryptionKey AlicePublicKey))
 
-(defclass BobCipherText
+(defindividual  BobCipherText
+  :type CipherText
   :comment "Cipher text intended for Bob to read"
-  :super (owl-some hasEncryptionKey BobPublicKey))
+  :fact(is hasEncryptionKey BobPublicKey))
 
 (defclass AlicePlainText
-:comment "Plain text for Alice to encrypt "
-)
+  :comment "Plain text for Alice to encrypt ")
 
-(defoproperty hasCipherText)
+(defoproperty hasCipherText
+  :ontology PublicKeyCryptography)
 
 (defindividual AliceCanDecrypt
   
-:fact (is hasKnowledgeOf AlicePrivateKey)
+  :fact (is hasKnowledgeOf AlicePrivateKey)
 
 
 ;;:equivalent 
@@ -67,22 +80,24 @@
   )
 
 (defindividual BobCanDecrypt
-
-:fact (is hasKnowledgeOf BobPrivateKey)
+   :fact (is hasKnowledgeOf BobPrivateKey)
  
  ;; :equivalent 
  ;; (owl-some hasCipherText BobCipherText)
  ;; (owl-some hasKnowledgeOf BobPrivateKey)
   )
 
-(defoproperty hasPlainText)
+(defoproperty hasPlainText
+  :ontology PublicKeyCryptography)
 
 (defclass AlicePlainText)
-(defclass AliceCanEncrypt
-  
-  :equivalent 
-  (owl-some hasPlainText AlicePlainText)
-  (owl-some hasKnowledgeOf BobPublicKey)
+
+(defindividual AliceCanEncrypt
+  :fact (is hasKnowledgeOf BobPublicKey)
+
+ ;; :equivalent 
+ ;; (owl-some hasPlainText AlicePlainText)
+ ;; (owl-some hasKnowledgeOf BobPublicKey)
 
 )
 
