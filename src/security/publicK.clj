@@ -11,6 +11,7 @@
    :comment "An Ontology for Public Key Cryptography")
 
 (defoproperty hasKnownBy)
+(defoproperty hasKnowledgeOf)
 
 (defclass AlicePublicKey
   :ontology PublicKeyCryptography
@@ -20,6 +21,7 @@
 (defclass PublicKey)
 
 (defoproperty hasEncryptionKey)
+
 (defindividual AlicePrivateKey
   :ontology PublicKeyCryptography
   :comment "is used to decrypt message by Alice only" 
@@ -29,11 +31,10 @@
   :ontology PublicKeyCryptography
   :comment "is used by everyone to encrypt message to Bob")
 
-(defclass BobPrivateKey
+(defindividual BobPrivateKey
   :ontology PublicKeyCryptography
   :comment "is used to decrypt message by Bob only"
-  :super
-  (owl-only hasKnownBy sec/Bob))
+  :fact(is hasKnownBy sec/Bob))
 
 (defclass CipherText
   :equivalent (owl-some hasEncryptionKey PublicKey))
@@ -53,34 +54,45 @@
 :comment "Plain text for Alice to encrypt "
 )
 
+(defoproperty hasCipherText)
 
-(defclass AliceCanDecrypt
-  :super CanDecrypt
-  :equivalent 
-  (owl-some hasCipherText AliceCipherText)
-  (owl-some hasKnowledgeOf AlicePrivateKey))
+(defindividual AliceCanDecrypt
+  
+:fact (is hasKnowledgeOf AlicePrivateKey)
 
-(defclass BobCanDecrypt
-  :super CanDecrypt
-  :equivalent 
-  (owl-some hasCipherText BobCipherText)
-  (owl-some hasKnowledgeOf BobPrivateKey))
 
+;;:equivalent 
+ ;; (owl-some hasCipherText AliceCipherText)
+ ;; (owl-some hasKnowledgeOf AlicePrivateKey)
+  )
+
+(defindividual BobCanDecrypt
+
+:fact (is hasKnowledgeOf BobPrivateKey)
+ 
+ ;; :equivalent 
+ ;; (owl-some hasCipherText BobCipherText)
+ ;; (owl-some hasKnowledgeOf BobPrivateKey)
+  )
+
+(defoproperty hasPlainText)
+
+(defclass AlicePlainText)
 (defclass AliceCanEncrypt
-  :super CanEncrypt
+  
   :equivalent 
-  (owl-some hasPlainText AlicePlainTwxt)
+  (owl-some hasPlainText AlicePlainText)
   (owl-some hasKnowledgeOf BobPublicKey)
 
 )
 
 
-(defindividual Alice
+
+(refine sec/Alice
   :fact (is hasKnowledgeOf AlicePublicKey)
         (is hasKnowledgeOf AlicePrivateKey)
         (is hasKnowledgeOf BobPublicKey))
  
-
 (defindividual Bob
   :fact (is hasKnowledgeOf BobPrivateKey)
         (is hasKnowledgeOf BobPublicKey)
