@@ -13,6 +13,9 @@
 (defclass PublicKey
    :ontology PublicKeyCryptography)
 
+(defclass PrivateKey
+   :ontology PublicKeyCryptography)
+
 (defoproperty hasKnownBy
    :ontology PublicKeyCryptography)
 
@@ -25,8 +28,7 @@
   :ontology PublicKeyCryptography
   :comment "is used by everyone to encrypt message to Alice")
  
-(defclass PrivateKey
-   :ontology PublicKeyCryptography)
+
 
 
 (defoproperty hasEncryptionKey
@@ -61,7 +63,7 @@
   :fact (is hasEncryptionKey AlicePublicKey))
 
 (defindividual  BobCipherText
-  :type CipherText
+  :type sec/CipherText
   :comment "Cipher text intended for Bob to read"
   :fact(is hasEncryptionKey BobPublicKey))
 

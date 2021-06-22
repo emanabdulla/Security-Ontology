@@ -14,9 +14,39 @@
   :label "security"
   :comment "The tool use to encrypt & decrypt the message")
 
+(defoproperty hasKey
+ :ontology SecurityVocab)
 
-(defoproperty hasDecrypted 
+(defoproperty hasKnowledgeOf
   :ontology SecurityVocab)
+
+
+(as-disjoint
+ (defclass AliceKey
+   :label "Key"
+   :comment "K.......")
+ (defclass BobKey
+   :label "Key"
+   :comment "K......"))
+
+
+(defclass Alice
+  :super (owl-some hasKey AliceKey)
+         (owl-some hasKnowledgeOf AliceKey))
+ 
+
+(defclass Bob
+  :super (owl-some hasKey BobKey)
+         (owl-some hasKnowledgeOf BobKey))
+  
+
+(defclass Eve
+   (owl-not hasKnowledgeOf AliceKey))
+
+(defclass Encryption
+  :ontology SecurityVocab
+  :label "security"
+  :comment "The proces to change plainText to CipherText")
 
 (defoproperty hasEncrypted
   :ontology SecurityVocab)
@@ -24,10 +54,21 @@
 (defoproperty CanEncrypt
  :ontology SecurityVocab)
 
+(defclass Decryption
+  :ontology SecurityVocab
+  :label "security"
+  :comment "The proces to change CiphrtText to PlainText")
+
+(defoproperty hasDecrypted 
+  :ontology SecurityVocab)
+
 (defoproperty CanDecrypt
  :ontology SecurityVocab)
 
-(defclass CipherText)
+(defclass CipherText
+  :ontology SecurityVocab
+  :label "security"
+  :comment "The message after encryption")
 
 
 (defclass PlainText
@@ -35,60 +76,16 @@
   :label "security"
   :comment "The message before encryption"
   :super
-  (owl-some hasDecrypted CipherText)
-  )
+  (owl-some hasDecrypted CipherText))
 
 (refine  CipherText
-  :ontology SecurityVocab
-  :label "security"
-  :comment "The message after encryption"
   :super
   (owl-some hasEncrypted PlainText))
 
-(defclass Encryption
-  :ontology SecurityVocab
-  :label "security"
-  :comment "The proces to change plainText to CipherText")
-
-
-
-(defclass Decryption
-  :ontology SecurityVocab
-  :label "security"
-  :comment "The proces to change CiphrtText to PlainText"
-)
-
-(defoproperty hasKnowledgeOf
-  :ontology SecurityVocab
-)
-
-;;delete
-(defoproperty CanDecrypt
- :ontology SecurityVocab)
-
-
-
-
-
 ;;(defclass CanDecrypt/CanEncrypt :equivalent (owl-some hasKnoewledgeOf Key)
 
-(defindividual AlicesKey
-  :type Key
-)
-(defindividual BobKey
-   :type Key
-)
-(defindividual Alice
-  :fact (is hasKnowledgeOf AlicesKey))
- 
 
-(defindividual Bob
-  :fact (is hasKnowledgeOf BobKey))
 
-(defindividual Eve
-  :fact (owl-not hasKnowledgeOf AlicesKey)
-        (owl-not hasKnowledgeOf BobKey)        
-)
+(save-ontology "o.omn" :omn)
 
-;;(save-ontology "o.omn" :omn) 
 ;;(tawny.reasoner/coherent?)
