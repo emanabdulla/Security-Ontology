@@ -55,7 +55,7 @@
 
 
 (as-inverse
-(defoproperty isEncryptionOf 
+ (defoproperty isEncryptionOf 
 :domain CipherText
 :range PlainText )
 (defoproperty isDecryptionOf 
