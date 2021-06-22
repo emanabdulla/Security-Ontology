@@ -25,10 +25,11 @@
 
 (as-disjoint
  (defclass AliceKey
+  :super Key
    
    :comment "K.......")
  (defclass BobKey
-   
+   :super Key
    :comment "K......"))
 
 (defclass One
@@ -92,7 +93,7 @@
   :super
   (owl-some isDecryptionOf CipherText))
 
-(refine  CipherText
+(refine CipherText
   :super
   (owl-some isEncryptionOf PlainText))
 
