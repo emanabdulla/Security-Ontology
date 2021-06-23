@@ -3,13 +3,14 @@
 (:use [tawny.owl])
   (:require [tawny.owl :refer :all]
             [tawny.english]
-            [tawny.reasoner :as r]))
+            [tawny.reasoner :as r]
+            ))
 
 (defontology SecurityVocab
    :iri "http://www.russet.org.uk/tawny/security/securityVocab"
    :comment "The vovabulary for Security domain")
 
- (reasoner-factory :hermit)
+(r/reasoner-factory :hermit)
 
 
 (defclass Key
@@ -26,9 +27,7 @@
 
 (as-disjoint
  (defclass AliceKey
-   :super Key
-  
-  
+  :super Key
    
    :comment "K.......")
  (defclass BobKey
