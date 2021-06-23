@@ -8,7 +8,8 @@
 (defontology SecurityVocab
    :iri "http://www.russet.org.uk/tawny/security/securityVocab"
    :comment "The vovabulary for Security domain")
-(reasoner-factory :hermit)
+
+ (reasoner-factory :hermit)
 
 
 (defclass Key
@@ -25,7 +26,9 @@
 
 (as-disjoint
  (defclass AliceKey
-  :super Key
+   :super Key
+  
+  
    
    :comment "K.......")
  (defclass BobKey
@@ -53,14 +56,26 @@
   :label "security"
   :comment "The proces to change plainText to CipherText")
 
+(defclass CipherText
+  :ontology SecurityVocab
+  
+  :comment "The message after encryption")
+
+
+(defclass PlainText
+  :ontology SecurityVocab
+  
+  :comment "The message before encryption"
+ )
 
 (as-inverse
  (defoproperty isEncryptionOf 
-:domain CipherText
-:range PlainText )
-(defoproperty isDecryptionOf 
-:domain PlainText
-:range CipherText))
+  :domain CipherText
+  :range PlainText )
+
+ (defoproperty isDecryptionOf 
+  :domain PlainText
+  :range CipherText))
 
 
 (defoproperty hasEncrypted
@@ -80,22 +95,15 @@
 (defoproperty CanDecrypt
  :ontology SecurityVocab)
 
-(defclass CipherText
-  :ontology SecurityVocab
-  
-  :comment "The message after encryption")
 
-
-(defclass PlainText
-  :ontology SecurityVocab
-  
-  :comment "The message before encryption"
-  :super
-  (owl-some isDecryptionOf CipherText))
 
 (refine CipherText
   :super
   (owl-some isEncryptionOf PlainText))
+
+(refine PlainText
+  :super
+ (owl-some isDecryptionOf CipherText))
 
 ;;(defclass CanDecrypt/CanEncrypt :equivalent (owl-some hasKnoewledgeOf Key)
 
