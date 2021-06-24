@@ -1,8 +1,8 @@
 (ns security.publicK
-(:use [tawny.owl])
+  (:use [tawny.owl])
   (:require [tawny.owl :refer :all]
             [tawny.english]
-            [tawny.reasoner]
+            [tawny.reasoner :as r]
            [security.security :as sec]))
 
 
@@ -10,11 +10,70 @@
    :iri "http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography"
    :comment "An Ontology for Public Key Cryptography")
 
+(r/reasoner-factory :hermit)
+
 (defclass PublicKey
    :ontology PublicKeyCryptography)
 
+(defoproperty isEncryptedBy)
+(defoproperty isDecryptedBy)
+(defoproperty isEncrypts)
+(defoproperty isDecrypts)
+
+
+
+
+(as-subclasses
+  PublicKey
+  :disjoint
+(defclass AlicePublicKey
+  
+  :ontology PublicKeyCryptography
+  :comment "is used by everyone to encrypt message to Alice"
+  :super (owl-some isEncrypts AliceCipherText))
+  
+(defclass  BobPublicKey
+  :super (owl-some isEncrypts BobCipherText)
+  :ontology PublicKeyCryptography
+  :comment "is used by everyone to encrypt message to Bob"))
+
+
+
+
 (defclass PrivateKey
    :ontology PublicKeyCryptography)
+
+
+(as-subclasses
+  PrivateKey
+  :disjoint
+(defclass AlicePrivateKey
+  :comment "is used to decrypt message by Alice only" 
+  :super    (some-only  hasKnownBy sec/Alice)
+            (owl-some isDecrypts AliceCipherText))
+(defclass BobPrivateKey
+  :ontology PublicKeyCryptography
+  :comment "is used to decrypt message by Bob only"
+  :super (some-only hasKnownBy sec/Bob)
+         (owl-some isDecrypts BobCipherText)))
+
+
+(defclass CipherText)
+
+(as-subclasses
+  CipherText
+  :disjoint
+
+(defclass AliceCipherText 
+   :comment "Cipher text intended for Alice to read"
+   :super (owl-some isEncryptedBy AlicePublicKey)
+          (owl-some isDecryptedBy AlicePrivateKey))
+
+(defclass BobCipherText
+  
+  :comment "Cipher text intended for Bob to read"
+  :super (owl-some isEncryptedBy BobPublicKey)
+         (owl-some isDecryptedBy BobPrivateKey)))
 
 (defoproperty hasKnownBy
    :ontology PublicKeyCryptography)
@@ -23,96 +82,31 @@
    :ontology PublicKeyCryptography)
 
 
-(defindividual AlicePublicKey
-  :type PublicKey
-  :ontology PublicKeyCryptography
-  :comment "is used by everyone to encrypt message to Alice")
- 
-
-
-
 (defoproperty hasEncryptionKey
    :ontology PublicKeyCryptography)
 
-(defindividual AlicePrivateKey
-  :type PrivateKey
-  :ontology PublicKeyCryptography
-  :comment "is used to decrypt message by Alice only" 
-  :fact (is hasKnownBy sec/Alice))
-
-(defindividual BobPublicKey
-  :type PublicKey
-  :ontology PublicKeyCryptography
-  :comment "is used by everyone to encrypt message to Bob")
-
-(defindividual BobPrivateKey
-  :type PrivateKey
-  :ontology PublicKeyCryptography
-  :comment "is used to decrypt message by Bob only"
-  :fact(is hasKnownBy sec/Bob))
-
-(defclass CipherText
-  :equivalent (owl-some hasEncryptionKey PublicKey))
 
 ;; Useful test
 ;; (r/isuperclass? CipherText AliceCipherText)
 
-(defindividual AliceCipherText
-  :type CipherText
-  :comment "Cipher text intended for Alice to read"
-  :fact (is hasEncryptionKey AlicePublicKey))
 
-(defindividual  BobCipherText
-  :type sec/CipherText
-  :comment "Cipher text intended for Bob to read"
-  :fact(is hasEncryptionKey BobPublicKey))
+(defclass PlainText)
 
+(as-subclasses
+  PlainText
+  :disjoint 
 (defclass AlicePlainText
-  :comment "Plain text for Alice to encrypt ")
-
-(defoproperty hasCipherText
-  :ontology PublicKeyCryptography)
-
-(defindividual AliceCanDecrypt
-  
-  :fact (is hasKnowledgeOf AlicePrivateKey)
-
-
-;;:equivalent 
- ;; (owl-some hasCipherText AliceCipherText)
- ;; (owl-some hasKnowledgeOf AlicePrivateKey)
-  )
-
-(defindividual BobCanDecrypt
-   :fact (is hasKnowledgeOf BobPrivateKey)
- 
- ;; :equivalent 
- ;; (owl-some hasCipherText BobCipherText)
- ;; (owl-some hasKnowledgeOf BobPrivateKey)
-  )
-
-(defoproperty hasPlainText
-  :ontology PublicKeyCryptography)
-
-(defclass AlicePlainText)
-
-(defindividual AliceCanEncrypt
-  :fact (is hasKnowledgeOf BobPublicKey)
-
- ;; :equivalent 
- ;; (owl-some hasPlainText AlicePlainText)
- ;; (owl-some hasKnowledgeOf BobPublicKey)
-
-)
-
+  :comment "a message will be sent by Alice")
+(defclass BobPlainText
+ :comment "a message will be sent by Bob"))
 
 
 (refine sec/Alice
-  :fact (is hasKnowledgeOf AlicePublicKey)
-        (is hasKnowledgeOf AlicePrivateKey)
-        (is hasKnowledgeOf BobPublicKey))
+        (owl-some hasKnowledgeOf AlicePublicKey)
+        (owl-some hasKnowledgeOf AlicePrivateKey)
+        (owl-some hasKnowledgeOf BobPublicKey))
  
-(defindividual Bob
-  :fact (is hasKnowledgeOf BobPrivateKey)
-        (is hasKnowledgeOf BobPublicKey)
-        (is hasKnowledgeOf AlicePublicKey))
+(refine sec/Bob
+        (owl-some hasKnowledgeOf BobPrivateKey)
+        (owl-some hasKnowledgeOf BobPublicKey)
+        (owl-some hasKnowledgeOf AlicePublicKey))
