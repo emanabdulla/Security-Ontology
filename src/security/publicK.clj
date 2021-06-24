@@ -3,7 +3,7 @@
   (:require [tawny.owl :refer :all]
             [tawny.english]
             [tawny.reasoner :as r]
-           [security.security :as sec]))
+            [security.security :as sec]))
 
 
 (defontology PublicKeyCryptography
@@ -21,7 +21,18 @@
 (defoproperty isDecrypts)
 
 
+(defclass CipherText)
+ (as-subclasses
+   CipherText
+   :disjoint
 
+(defclass AliceCipherText
+:comment "Cipher text intended for Alice to read")
+(defclass BobCipherText
+ :comment "Cipher text intended for Bob to read"))
+
+(defoproperty hasKnownBy
+   :ontology PublicKeyCryptography)
 
 (as-subclasses
   PublicKey
@@ -58,25 +69,16 @@
          (owl-some isDecrypts BobCipherText)))
 
 
-(defclass CipherText)
-
-(as-subclasses
-  CipherText
-  :disjoint
-
-(defclass AliceCipherText 
-   :comment "Cipher text intended for Alice to read"
+(refine AliceCipherText 
    :super (owl-some isEncryptedBy AlicePublicKey)
           (owl-some isDecryptedBy AlicePrivateKey))
 
-(defclass BobCipherText
-  
-  :comment "Cipher text intended for Bob to read"
+(refine BobCipherText
   :super (owl-some isEncryptedBy BobPublicKey)
-         (owl-some isDecryptedBy BobPrivateKey)))
+         (owl-some isDecryptedBy BobPrivateKey))
 
-(defoproperty hasKnownBy
-   :ontology PublicKeyCryptography)
+
+
 
 (defoproperty hasKnowledgeOf
    :ontology PublicKeyCryptography)
