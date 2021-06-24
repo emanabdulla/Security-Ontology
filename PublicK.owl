@@ -1,0 +1,401 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography">
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="SecurityVocab" IRI="http://www.russet.org.uk/tawny/security/securityVocab#"/>
+    <Prefix name="PublicKeyCryptography" IRI="http://www.russet.org.uk/tawny/publickey/PublicKeyCryptography#"/>
+    <Import>http://www.purl.org/ontolink/tawny</Import>
+    <Annotation>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">PublicKeyCryptography</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">An Ontology for Public Key Cryptography</Literal>
+    </Annotation>
+    <Declaration>
+        <ObjectProperty IRI="#decrypts"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BobCipherText"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="SecurityVocab:Bob"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AliceCipherText"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="SecurityVocab:Alice"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BobPrivateKey"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasKnownBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isDecryptedBy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PublicKey"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isEncryptedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#encrypts"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AlicePrivateKey"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BobPublicKey"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PlainText"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CipherText"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AlicePublicKey"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PrivateKey"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasEncryptionKey"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BobPlainText"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AlicePlainText"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#AliceCipherText"/>
+        <Class IRI="#CipherText"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AliceCipherText"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isDecryptedBy"/>
+            <Class IRI="#AlicePrivateKey"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AliceCipherText"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isEncryptedBy"/>
+            <Class IRI="#AlicePublicKey"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AliceCipherText"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#isDecryptedBy"/>
+            <ObjectUnionOf>
+                <Class IRI="#AlicePrivateKey"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AliceCipherText"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#isEncryptedBy"/>
+            <ObjectUnionOf>
+                <Class IRI="#AlicePublicKey"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePlainText"/>
+        <Class IRI="#PlainText"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePrivateKey"/>
+        <Class IRI="#PrivateKey"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePrivateKey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#decrypts"/>
+            <Class IRI="#AliceCipherText"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePrivateKey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasKnownBy"/>
+            <Class abbreviatedIRI="SecurityVocab:Alice"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePrivateKey"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#decrypts"/>
+            <ObjectUnionOf>
+                <Class IRI="#AliceCipherText"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePrivateKey"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasKnownBy"/>
+            <ObjectUnionOf>
+                <Class abbreviatedIRI="SecurityVocab:Alice"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePublicKey"/>
+        <Class IRI="#PublicKey"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePublicKey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#encrypts"/>
+            <Class IRI="#AliceCipherText"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#AlicePublicKey"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#encrypts"/>
+            <ObjectUnionOf>
+                <Class IRI="#AliceCipherText"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobCipherText"/>
+        <Class IRI="#CipherText"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobCipherText"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isDecryptedBy"/>
+            <Class IRI="#BobPrivateKey"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobCipherText"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isEncryptedBy"/>
+            <Class IRI="#BobPublicKey"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPlainText"/>
+        <Class IRI="#PlainText"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPrivateKey"/>
+        <Class IRI="#PrivateKey"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPrivateKey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#decrypts"/>
+            <Class IRI="#BobCipherText"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPrivateKey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasKnownBy"/>
+            <Class abbreviatedIRI="SecurityVocab:Bob"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPrivateKey"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#hasKnownBy"/>
+            <ObjectUnionOf>
+                <Class abbreviatedIRI="SecurityVocab:Bob"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPublicKey"/>
+        <Class IRI="#PublicKey"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPublicKey"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#encrypts"/>
+            <Class IRI="#BobCipherText"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BobPublicKey"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty IRI="#encrypts"/>
+            <ObjectUnionOf>
+                <Class IRI="#BobCipherText"/>
+            </ObjectUnionOf>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#AliceCipherText"/>
+        <Class IRI="#BobCipherText"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#AlicePlainText"/>
+        <Class IRI="#BobPlainText"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#AlicePrivateKey"/>
+        <Class IRI="#BobPrivateKey"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#AlicePublicKey"/>
+        <Class IRI="#BobPublicKey"/>
+    </DisjointClasses>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#AliceCipherText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">AliceCipherText</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#AliceCipherText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Cipher text intended for Alice to read</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#AlicePlainText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">AlicePlainText</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#AlicePlainText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">a message will be sent by Alice</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#AlicePrivateKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">AlicePrivateKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#AlicePrivateKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">is used to decrypt message by Alice only</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#AlicePublicKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">AlicePublicKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#AlicePublicKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">is used by everyone to encrypt message to Alice</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#BobCipherText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">BobCipherText</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#BobCipherText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Cipher text intended for Bob to read</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#BobPlainText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">BobPlainText</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#BobPlainText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">a message will be sent by Bob</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#BobPrivateKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">BobPrivateKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#BobPrivateKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">is used to decrypt message by Bob only</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#BobPublicKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">BobPublicKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#BobPublicKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">is used by everyone to encrypt message to Bob</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#CipherText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">CipherText</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#PlainText</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">PlainText</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#PrivateKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">PrivateKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#PublicKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">PublicKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#decrypts</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">decrypts</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#encrypts</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">encrypts</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#hasEncryptionKey</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">hasEncryptionKey</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#hasKnownBy</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">hasKnownBy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#isDecryptedBy</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">isDecryptedBy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty IRI="http://www.purl.org/ontolink/tawny#name"/>
+        <IRI>#isEncryptedBy</IRI>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">isEncryptedBy</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+

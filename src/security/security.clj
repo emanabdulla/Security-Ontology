@@ -3,8 +3,7 @@
 (:use [tawny.owl])
   (:require [tawny.owl :refer :all]
             [tawny.english]
-            [tawny.reasoner :as r]
-            ))
+            [tawny.reasoner :as r]))
 
 (defontology SecurityVocab
    :iri "http://www.russet.org.uk/tawny/security/securityVocab"
