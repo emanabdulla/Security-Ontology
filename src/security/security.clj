@@ -14,7 +14,6 @@
 
 (defclass Key
   :ontology SecurityVocab
-  
   :comment "The tool use to encrypt & decrypt the message")
 
 (defoproperty hasKey
@@ -23,48 +22,44 @@
 (defoproperty hasKnowledgeOf
   :ontology SecurityVocab)
 
-
-(as-disjoint
- (defclass AliceKey
+(defclass SecretKey
   :super Key
-   
-   :comment "K.......")
- (defclass BobKey
-   :super Key
-   :comment "K......"))
-
-(defclass One
-  :super Key)
+  :comment "is used to encrypt and decrypt a message")
 
 (defclass Alice
-  :super (owl-some hasKey AliceKey)
-         (owl-some hasKnowledgeOf AliceKey))
+  :super (owl-some hasKey SecretKey)
+         (owl-some hasKnowledgeOf SecretKey))
  
 
 (defclass Bob
-  :super (owl-some hasKey BobKey)
-         (owl-some hasKnowledgeOf BobKey))
+  :super (owl-some hasKey SecretKey)
+         (owl-some hasKnowledgeOf SecretKey))
   
 
 (defclass Eve
-  :super (only hasKnowledgeOf(owl-not (owl-or AliceKey BobKey))))
+  :super (only hasKnowledgeOf(owl-not (owl-or SecretKey Key))))
+
 
 (defclass Encryption
   :ontology SecurityVocab
   :label "security"
   :comment "The proces to change plainText to CipherText")
 
+(defoproperty hasEncryptionKey
+  :ontology SecurityVocab)
+(defoproperty hasDecryptionKey
+  :ontology SecurityVocab)
+
 (defclass CipherText
+  :super (owl-some hasDecryptionKey SecretKey)
   :ontology SecurityVocab
-  
   :comment "The message after encryption")
 
 
 (defclass PlainText
+  :super (owl-some hasEncryptionKey SecretKey)
   :ontology SecurityVocab
-  
-  :comment "The message before encryption"
- )
+  :comment "The message before encryption")
 
 (as-inverse
  (defoproperty isEncryptionOf 
@@ -76,11 +71,8 @@
   :range CipherText))
 
 
-(defoproperty hasEncrypted
-  :ontology SecurityVocab)
 
-(defoproperty CanEncrypt
- :ontology SecurityVocab)
+
 
 (defclass Decryption
   :ontology SecurityVocab
@@ -103,11 +95,8 @@
   :super
  (owl-some isDecryptionOf CipherText))
 
-;;(defclass CanDecrypt/CanEncrypt :equivalent (owl-some hasKnoewledgeOf Key)
-
-
 
 (save-ontology "SecurityVocab.omn" :omn)
 (save-ontology "SecurityVocab.owl" :owl)
 
-;;(tawny.reasoner/coherent?)
+
