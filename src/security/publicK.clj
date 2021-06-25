@@ -65,7 +65,7 @@
    :ontology PublicKeyCryptography
    :comment "is used to decrypt message by Bob only"
    :super (some-only hasKnownBy sec/Bob)
-          (owl-some decrypts BobCipherText)))
+          (some-only decrypts BobCipherText)))
 
 
 (refine AliceCipherText 
@@ -73,8 +73,8 @@
            (some-only isDecryptedBy AlicePrivateKey))
 
 (refine BobCipherText
-    :super (owl-some isEncryptedBy BobPublicKey)
-           (owl-some isDecryptedBy BobPrivateKey))
+    :super (some-only isEncryptedBy BobPublicKey)
+           (some-only isDecryptedBy BobPrivateKey))
 
 (defoproperty hasEncryptionKey
   :ontology PublicKeyCryptography)
@@ -95,14 +95,14 @@
 
 
 (refine sec/Alice
-        (owl-some sec/hasKnowledgeOf AlicePublicKey)
-        (owl-some sec/hasKnowledgeOf AlicePrivateKey)
-        (owl-some sec/hasKnowledgeOf BobPublicKey))
+     :super (owl-some sec/hasKnowledgeOf AlicePublicKey)
+            (owl-some sec/hasKnowledgeOf AlicePrivateKey)
+            (owl-some sec/hasKnowledgeOf BobPublicKey))
 
 (refine sec/Bob
-        (owl-some sec/hasKnowledgeOf BobPrivateKey)
-        (owl-some sec/hasKnowledgeOf BobPublicKey)
-        (owl-some sec/hasKnowledgeOf AlicePublicKey))
+     :super (owl-some sec/hasKnowledgeOf BobPrivateKey)
+            (owl-some sec/hasKnowledgeOf BobPublicKey)
+            (owl-some sec/hasKnowledgeOf AlicePublicKey))
 
 (save-ontology "PublicK.omn" :omn)
 (save-ontology "PublicK.owl" :owl)
