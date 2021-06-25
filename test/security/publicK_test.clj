@@ -2,7 +2,6 @@
     (:use [clojure.test])
     (:require
      [security.publicK :as p]
-    
      [tawny.owl :as o]
      [tawny.reasoner :as r]
      [tawny.fixture :as f]))
@@ -17,12 +16,7 @@
 
 (use-fixtures :once ontology-reasoner-fixture)
 
-
-
-
 (use-fixtures :each (f/reasoner :hermit))
-
-
 
 (deftest reasonable
   (is (r/consistent? p/PublicKeyCryptography))
@@ -72,11 +66,7 @@
 (is (r/isuperclass? p/AlicePrivateKey p/PrivateKey))
 (is (r/isuperclass? p/BobPrivateKey p/PrivateKey))
 
-(is (not (r/isuperclass? p/AlicePrivateKey p/PublicKey)))
-
-
-
-)
+(is (not (r/isuperclass? p/AlicePrivateKey p/PublicKey))))
 
 
 
