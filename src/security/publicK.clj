@@ -15,10 +15,15 @@
 (defclass PublicKey
   :ontology PublicKeyCryptography)
 
-(defoproperty isEncryptedBy)
-(defoproperty isDecryptedBy)
-(defoproperty encrypts)
-(defoproperty decrypts)
+(defoproperty isEncryptedBy
+  :ontology PublicKeyCryptography)
+(defoproperty isDecryptedBy
+  :ontology PublicKeyCryptography)
+(defoproperty encrypts
+  :ontology PublicKeyCryptography)
+(defoproperty decrypts
+ :ontology PublicKeyCryptography)
+
 
 
 (defclass CipherText)
