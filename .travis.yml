@@ -1,5 +1,4 @@
 language: clojure
-sudo: no
 lein: lein2
 script:
   - lein test
