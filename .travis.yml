@@ -1,0 +1,8 @@
+language: clojure
+lein: lein2
+jdk:
+  - openjdk7
+
+notifications:
+   email:
+     - emme-666@hotmail.com
