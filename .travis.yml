@@ -1,5 +1,5 @@
 language: clojure
-lein: lein
+lein: lein2
 jdk:
   - openjdk11
 
