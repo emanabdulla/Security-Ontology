@@ -13,12 +13,12 @@
 (r/reasoner-factory :hermit)
 
 (defclass PublicKey
+  :comment "A cryptographic key used by a public-key (asymmetric) cryptographic algorithm 
+            It can be obtained and used by anyone to encrypt messages intended for a particular recipient"
   :ontology PublicKeyCryptography)
 
-(defoproperty isEncryptedBy
-  :ontology PublicKeyCryptography)
-(defoproperty isDecryptedBy
-  :ontology PublicKeyCryptography)
+
+
 (defoproperty encrypts
   :ontology PublicKeyCryptography)
 (defoproperty decrypts
@@ -37,7 +37,7 @@
    :comment "Cipher text intended for Bob to read"))
 
 (defoproperty hasKnownBy
-  :ontology PublicKeyCryptography)
+  :range sec/Person)
 
 (as-subclasses
  PublicKey
@@ -55,7 +55,8 @@
 
 
 (defclass PrivateKey
-  :ontology PublicKeyCryptography)
+  :comment "A cryptographic key used by a public-key (asymmetric) cryptographic
+            algorithm this key must be kept secret by the owner")
 
 
 (as-subclasses
@@ -72,6 +73,13 @@
    :super (some-only hasKnownBy sec/Bob)
           (some-only decrypts BobCipherText)))
 
+(defoproperty isEncryptedBy
+  :domain CipherText
+  :range PublicKey)
+
+(defoproperty isDecryptedBy
+  :domain CipherText
+  :range PrivateKey)
 
 (refine AliceCipherText 
    :super  (some-only isEncryptedBy AlicePublicKey)
@@ -81,14 +89,11 @@
     :super (some-only isEncryptedBy BobPublicKey)
            (some-only isDecryptedBy BobPrivateKey))
 
-(defoproperty hasEncryptionKey
-  :ontology PublicKeyCryptography)
+
+(defclass PlainText
+:comment "The message before encryption(Unencrypted data)")
 
 
-;; Useful test
-;; (r/isuperclass? CipherText AliceCipherText)
-
-(defclass PlainText)
 
 (as-subclasses
  PlainText
@@ -97,6 +102,12 @@
    :comment "a message will be sent by Alice")
  (defclass BobPlainText
    :comment "a message will be sent by Bob"))
+
+(defclass CanDecrypt
+ :equivalent (and CipherText(owl-some sec/hasKnowledgeOf PrivateKey)))
+
+(defclass CanEncrypt
+:equivalent (and PlainText (owl-some sec/hasKnowledgeOf PublicKey)))
 
 
 (refine sec/Alice
