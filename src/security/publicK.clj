@@ -25,7 +25,6 @@
  :ontology PublicKeyCryptography)
 
 
-
 (defclass CipherText)
 (as-subclasses
  CipherText
@@ -104,9 +103,11 @@
    :comment "a message will be sent by Bob"))
 
 (defclass CanDecrypt
+ :super sec/Role
  :equivalent (and CipherText(owl-some sec/hasKnowledgeOf PrivateKey)))
 
 (defclass CanEncrypt
+:super sec/Role
 :equivalent (and PlainText (owl-some sec/hasKnowledgeOf PublicKey)))
 
 

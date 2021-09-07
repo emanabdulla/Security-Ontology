@@ -11,12 +11,16 @@
 
 (r/reasoner-factory :hermit)
 
+(defclass nObject)
+(defclass Role)
+(defclass Proces)
 
 (defclass Key
   :ontology SecurityVocab
   :comment "The tool use to encrypt & decrypt the message")
 
 (defclass Person
+  :super nObject
   :comment "Represents the set of people involved in encryption and decryption process")
 
 
@@ -48,8 +52,9 @@
   :super (only hasKnowledgeOf(owl-not (owl-or SecretKey Key)))))
 
 (defclass Encryption
+  :super Proces
   :ontology SecurityVocab
-  :label "security"
+ 
   :comment "The proces to change plainText to CipherText")
 
 (defoproperty hasEncryptionKey
@@ -79,6 +84,7 @@
 
 
 (defclass Decryption
+  :super Proces
   :ontology SecurityVocab
   :comment "The process of changing ciphertext into plaintext")
 
