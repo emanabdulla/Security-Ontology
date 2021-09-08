@@ -93,7 +93,6 @@
 :comment "The message before encryption(Unencrypted data)")
 
 
-
 (as-subclasses
  PlainText
  :disjoint 
@@ -120,6 +119,41 @@
      :super (owl-some sec/hasKnowledgeOf BobPrivateKey)
             (owl-some sec/hasKnowledgeOf BobPublicKey)
             (owl-some sec/hasKnowledgeOf AlicePublicKey))
+
+(defclass DigitalSignature 
+ :super sec/Proces
+ :comment "is a process that guarantees that the contents of a message have not been altered in transit")
+
+(defclass HashValue
+:comment "is a numeric value of a fixed length that uniquely identifies data, is calculated by a computer & used with digital signatures.")
+
+(as-subclasses
+ HashValue
+:disjoint
+(defclass AliceHashValue
+:comment " is a numeric value calculatedt by Alice's computer")
+(defclass BobHashValue
+:comment " is a numeric value calculatedt by Bob's computer "))
+
+(as-subclasses
+ DigitalSignature
+:disjoint
+(defclass AliceSignature
+:comment " is used to sign the message sent by Alice  ")
+(defclass BobSignature
+:comment " is used to sign the message sent by Bob ")
+)
+
+(defoproperty isSignedBy)
+
+(defclass AliceSignedMessage
+ :comment "A message signed by Alice"
+ :super (owl-some isSignedBy AliceSignature))
+
+(defclass BobSignedMessage
+ :comment "A message signed by Bob"
+ :super (owl-some isSignedBy BobSignature))
+
 
 (save-ontology "PublicK.omn" :omn)
 (save-ontology "PublicK.owl" :owl)
